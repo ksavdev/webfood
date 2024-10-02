@@ -37,7 +37,7 @@ window.addEventListener('DOMContentLoaded', () => {
     });
 
     //Timer
-    const deadline = '2024-09-30'
+    const deadline = '2024-12-31'
 
     function getTimeRemaining(endtime) {
         let days, hours, minutes, seconds;
@@ -198,12 +198,19 @@ window.addEventListener('DOMContentLoaded', () => {
         return await res.json();
     };
 
-    getResource('http://localhost:3000/menu')
+    // getResource('http://localhost:3000/menu')
+    //     .then(data => {
+    //         data.forEach(({img, altimg, title, descr, price}) => {
+    //             new MenuCard(img, altimg, title, descr, price, '.menu .container').render();
+    //         })
+    //     });
+
+    axios.get('http://localhost:3000/menu')
         .then(data => {
-            data.forEach(({img, altimg, title, descr, price}) => {
+            data.data.forEach(({img, altimg, title, descr, price}) => {
                 new MenuCard(img, altimg, title, descr, price, '.menu .container').render();
             })
-        });
+        })
 
     // Второй вариант реализации с генерацией карточек без шаблонизации
     // getResource('http://localhost:3000/menu')
