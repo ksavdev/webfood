@@ -1,7 +1,6 @@
 window.addEventListener('DOMContentLoaded', () => {
     //tabs
-    const tabs = document.querySelectorAll('.tabheader__item'),
-        tabsContent = document.querySelectorAll('.tabcontent'),
+    const tabs = document.querySelectorAll('.tabheader__item'), tabsContent = document.querySelectorAll('.tabcontent'),
         tabsParent = document.querySelector('.tabheader__items');
 
     function hideTabContent() {
@@ -51,18 +50,11 @@ window.addEventListener('DOMContentLoaded', () => {
             seconds = 0;
         } else {
 
-            days = Math.floor(t / (1000 * 60 * 60 * 24)),
-                hours = Math.floor((t / (1000 * 60 * 60) % 24)),
-                minutes = Math.floor((t / 1000 / 60) % 60),
-                seconds = Math.floor((t / 1000) % 60);
+            days = Math.floor(t / (1000 * 60 * 60 * 24)), hours = Math.floor((t / (1000 * 60 * 60) % 24)), minutes = Math.floor((t / 1000 / 60) % 60), seconds = Math.floor((t / 1000) % 60);
         }
 
         return {
-            'total': t,
-            'days': days,
-            'hours': hours,
-            'minutes': minutes,
-            'seconds': seconds
+            'total': t, 'days': days, 'hours': hours, 'minutes': minutes, 'seconds': seconds
         }
     }
 
@@ -75,12 +67,9 @@ window.addEventListener('DOMContentLoaded', () => {
     }
 
     function setClock(selector, endtime) {
-        const timer = document.querySelector(selector),
-            days = timer.querySelector('#days'),
-            hours = timer.querySelector('#hours'),
-            minutes = timer.querySelector('#minutes'),
-            seconds = timer.querySelector('#seconds'),
-            timeInterval = setInterval(updateClock, 1000);
+        const timer = document.querySelector(selector), days = timer.querySelector('#days'),
+            hours = timer.querySelector('#hours'), minutes = timer.querySelector('#minutes'),
+            seconds = timer.querySelector('#seconds'), timeInterval = setInterval(updateClock, 1000);
 
         updateClock();
 
@@ -101,8 +90,7 @@ window.addEventListener('DOMContentLoaded', () => {
     setClock('.timer', deadline);
     //Modal
 
-    const modalTrigger = document.querySelectorAll('[data-modal]'),
-        modal = document.querySelector('.modal')
+    const modalTrigger = document.querySelectorAll('[data-modal]'), modal = document.querySelector('.modal')
 
     function openModal() {
         modal.classList.add('show');
@@ -182,8 +170,7 @@ window.addEventListener('DOMContentLoaded', () => {
                     <div class="menu__item-price">
                         <div class="menu__item-cost">Цена:</div>
                         <div class="menu__item-total"><span>${this.price}</span> грн/день</div>
-                    </div>`
-            ;
+                    </div>`;
             this.parent.append(element);
         }
     }
@@ -217,9 +204,7 @@ window.addEventListener('DOMContentLoaded', () => {
     const forms = document.querySelectorAll('form');
 
     const message = {
-        loading: 'img/form/spinner.svg',
-        success: 'Спасибо! Скоро мы с вами свяжемся',
-        failure: 'Что-то пошло не так...'
+        loading: 'img/form/spinner.svg', success: 'Спасибо! Скоро мы с вами свяжемся', failure: 'Что-то пошло не так...'
     };
     forms.forEach(item => {
         bindPostData(item);
@@ -227,11 +212,9 @@ window.addEventListener('DOMContentLoaded', () => {
 
     const postData = async (url, data) => {
         const res = await fetch(url, {
-            method: 'POST',
-            headers: {
+            method: 'POST', headers: {
                 'Content-Type': 'application/json',
-            },
-            body: data
+            }, body: data
         });
         return await res.json();
     }
@@ -296,12 +279,9 @@ window.addEventListener('DOMContentLoaded', () => {
 
     // Slider
 
-    const slides = document.querySelectorAll('.offer__slide'),
-        slider = document.querySelector('.offer__slider'),
-        prev = document.querySelector('.offer__slider-prev'),
-        next = document.querySelector('.offer__slider-next'),
-        total = document.querySelector('#total'),
-        current = document.querySelector('#current'),
+    const slides = document.querySelectorAll('.offer__slide'), slider = document.querySelector('.offer__slider'),
+        prev = document.querySelector('.offer__slider-prev'), next = document.querySelector('.offer__slider-next'),
+        total = document.querySelector('#total'), current = document.querySelector('#current'),
         slidesWrapper = document.querySelector('.offer__slider-wrapper'),
         slidesField = document.querySelector('.offer__slider-inner'),
         width = window.getComputedStyle(slidesWrapper).width;
@@ -339,8 +319,7 @@ window.addEventListener('DOMContentLoaded', () => {
     });
 
     slider.style.position = 'relative';
-    const indicators = document.createElement('ol'),
-        dots = [];
+    const indicators = document.createElement('ol'), dots = [];
 
     indicators.classList.add('carousel-indicators');
 
@@ -357,7 +336,7 @@ window.addEventListener('DOMContentLoaded', () => {
         dots.push(dot);
     }
 
-    function deleteNotDigits(str){
+    function deleteNotDigits(str) {
         return +str.replace(/\D/g, '');
     }
 
@@ -400,12 +379,81 @@ window.addEventListener('DOMContentLoaded', () => {
             slideIndex = slideTo;
             offset = deleteNotDigits(width) * (slideTo - 1)
             slidesField.style.transform = `translateX(-${offset}px)`;
-
             dotsOpacity();
 
         });
     });
 
+
+    //Calc
+
+    const result = document.querySelector(".calculating__result span")
+    let sex = 'female', height, weight, age, ratio = 1.375;
+
+    function caclTotal() {
+        if (!sex || !height || !weight || !age || !ratio) {
+            result.textContent = '____';
+            return;
+        }
+        if (sex === 'female') {
+            result.textContent = Math.round((447.6 + (9.2 * weight) + (3.1 * height) - (4.3 * age)) * ratio);
+        } else {
+            result.textContent = Math.round((88.36 + (13.4 * weight) + (4.8 * height) - (5.7 * age)) * ratio);
+        }
+    }
+
+
+    caclTotal();
+
+    function getStaticInformation(parentSelector, activeClass) {
+        const elements = document.querySelectorAll(`${parentSelector} div`);
+
+        elements.forEach(elem => {
+            elem.addEventListener('click', (e) => {
+                if (e.target.getAttribute('data-ratio')) {
+                    ratio = +e.target.getAttribute('data-ratio');
+                } else {
+                    sex = e.target.getAttribute('id');
+                }
+
+                elements.forEach(elem => {
+                    elem.classList.remove(activeClass);
+                });
+
+                e.target.classList.add(activeClass);
+                caclTotal();
+            });
+        })
+
+
+    }
+
+    getStaticInformation('#gender', 'calculating__choose-item_active');
+    getStaticInformation('.calculating__choose_big', 'calculating__choose-item_active');
+
+    function getDynamicInformation(selector) {
+        const input = document.querySelector(selector);
+
+        input.addEventListener('input', () => {
+            switch (input.getAttribute('id')) {
+                case 'height' :
+                    height = +input.value;
+                    break;
+                case 'weight' :
+                    weight = +input.value;
+                    break;
+                case 'age':
+                    age = +input.value;
+                    break;
+            }
+            caclTotal();
+        });
+
+    }
+
+    getDynamicInformation('#height');
+    getDynamicInformation('#weight');
+    getDynamicInformation('#age');
 });
 
 
